@@ -1,5 +1,5 @@
 module.exports = {
-  base: "/",
+  base: "/blog",
   title: "博客",
   dest: "./build",
   theme: "reco",
