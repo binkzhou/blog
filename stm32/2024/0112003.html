@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>阻塞延时与空闲任务 | 博客</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/katex.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/2.10.0/github-markdown.min.css">
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.c2d7d718.css" as="style"><link rel="preload" href="/blog/assets/js/app.adc2faba.js" as="script"><link rel="preload" href="/blog/assets/js/6.c7879e8b.js" as="script"><link rel="preload" href="/blog/assets/js/1.6ba5f926.js" as="script"><link rel="preload" href="/blog/assets/js/114.2e50a91d.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.fe7787a3.js"><link rel="prefetch" href="/blog/assets/js/100.fb062556.js"><link rel="prefetch" href="/blog/assets/js/101.fcbc1f90.js"><link rel="prefetch" href="/blog/assets/js/102.ac776d23.js"><link rel="prefetch" href="/blog/assets/js/103.a745b219.js"><link rel="prefetch" href="/blog/assets/js/104.83df1dc5.js"><link rel="prefetch" href="/blog/assets/js/105.4fe13a23.js"><link rel="prefetch" href="/blog/assets/js/106.a877e389.js"><link rel="prefetch" href="/blog/assets/js/107.a854feaa.js"><link rel="prefetch" href="/blog/assets/js/108.4c6eac1e.js"><link rel="prefetch" href="/blog/assets/js/109.30988643.js"><link rel="prefetch" href="/blog/assets/js/11.7b4ec8e0.js"><link rel="prefetch" href="/blog/assets/js/110.39f637f1.js"><link rel="prefetch" href="/blog/assets/js/111.9d749e3b.js"><link rel="prefetch" href="/blog/assets/js/112.098636e2.js"><link rel="prefetch" href="/blog/assets/js/113.7889c565.js"><link rel="prefetch" href="/blog/assets/js/115.3ec62f37.js"><link rel="prefetch" href="/blog/assets/js/116.f15e8be2.js"><link rel="prefetch" href="/blog/assets/js/12.126a4f02.js"><link rel="prefetch" href="/blog/assets/js/13.38669150.js"><link rel="prefetch" href="/blog/assets/js/14.46e810b6.js"><link rel="prefetch" href="/blog/assets/js/15.78b28d3d.js"><link rel="prefetch" href="/blog/assets/js/16.81416521.js"><link rel="prefetch" href="/blog/assets/js/17.8dc851f5.js"><link rel="prefetch" href="/blog/assets/js/18.8b0a903d.js"><link rel="prefetch" href="/blog/assets/js/19.eb149ccd.js"><link rel="prefetch" href="/blog/assets/js/20.932706c6.js"><link rel="prefetch" href="/blog/assets/js/21.16ef4c6f.js"><link rel="prefetch" href="/blog/assets/js/22.2fa9a7b7.js"><link rel="prefetch" href="/blog/assets/js/23.d4960d39.js"><link rel="prefetch" href="/blog/assets/js/24.39307edb.js"><link rel="prefetch" href="/blog/assets/js/25.e2d6bc7c.js"><link rel="prefetch" href="/blog/assets/js/26.6db1add7.js"><link rel="prefetch" href="/blog/assets/js/27.d9b88a60.js"><link rel="prefetch" href="/blog/assets/js/28.1a9e8d71.js"><link rel="prefetch" href="/blog/assets/js/29.ad13614d.js"><link rel="prefetch" href="/blog/assets/js/3.0a5dd309.js"><link rel="prefetch" href="/blog/assets/js/30.e0295e00.js"><link rel="prefetch" href="/blog/assets/js/31.89be1c6b.js"><link rel="prefetch" href="/blog/assets/js/32.aeebd2a4.js"><link rel="prefetch" href="/blog/assets/js/33.da9112ed.js"><link rel="prefetch" href="/blog/assets/js/34.0a1d2225.js"><link rel="prefetch" href="/blog/assets/js/35.a61a072f.js"><link rel="prefetch" href="/blog/assets/js/36.a55c29c6.js"><link rel="prefetch" href="/blog/assets/js/37.a3b42192.js"><link rel="prefetch" href="/blog/assets/js/38.a2b6c6fe.js"><link rel="prefetch" href="/blog/assets/js/39.d5275c88.js"><link rel="prefetch" href="/blog/assets/js/4.3d05c3e4.js"><link rel="prefetch" href="/blog/assets/js/40.b516d5e6.js"><link rel="prefetch" href="/blog/assets/js/41.e9122d30.js"><link rel="prefetch" href="/blog/assets/js/42.80f6f853.js"><link rel="prefetch" href="/blog/assets/js/43.a6770ce4.js"><link rel="prefetch" href="/blog/assets/js/44.940ee877.js"><link rel="prefetch" href="/blog/assets/js/45.767efffa.js"><link rel="prefetch" href="/blog/assets/js/46.a0db4406.js"><link rel="prefetch" href="/blog/assets/js/47.e776b4fb.js"><link rel="prefetch" href="/blog/assets/js/48.62c2b8cb.js"><link rel="prefetch" href="/blog/assets/js/49.60b0dfa2.js"><link rel="prefetch" href="/blog/assets/js/5.f3af935d.js"><link rel="prefetch" href="/blog/assets/js/50.14c4a6ee.js"><link rel="prefetch" href="/blog/assets/js/51.fb295fef.js"><link rel="prefetch" href="/blog/assets/js/52.3da8763c.js"><link rel="prefetch" href="/blog/assets/js/53.4d251dc3.js"><link rel="prefetch" href="/blog/assets/js/54.22d0bc7a.js"><link rel="prefetch" href="/blog/assets/js/55.83f6702e.js"><link rel="prefetch" href="/blog/assets/js/56.3f8712b5.js"><link rel="prefetch" href="/blog/assets/js/57.2c746969.js"><link rel="prefetch" href="/blog/assets/js/58.43894d05.js"><link rel="prefetch" href="/blog/assets/js/59.9652b9cb.js"><link rel="prefetch" href="/blog/assets/js/60.fce7f568.js"><link rel="prefetch" href="/blog/assets/js/61.b83d6958.js"><link rel="prefetch" href="/blog/assets/js/62.4248028d.js"><link rel="prefetch" href="/blog/assets/js/63.68cf9169.js"><link rel="prefetch" href="/blog/assets/js/64.071f99d5.js"><link rel="prefetch" href="/blog/assets/js/65.57cae4d8.js"><link rel="prefetch" href="/blog/assets/js/66.aaf39db5.js"><link rel="prefetch" href="/blog/assets/js/67.94b66cd3.js"><link rel="prefetch" href="/blog/assets/js/68.f59efbab.js"><link rel="prefetch" href="/blog/assets/js/69.a54cacad.js"><link rel="prefetch" href="/blog/assets/js/7.168cd95a.js"><link rel="prefetch" href="/blog/assets/js/70.125fb2b9.js"><link rel="prefetch" href="/blog/assets/js/71.d4d2c0b2.js"><link rel="prefetch" href="/blog/assets/js/72.c83b1c30.js"><link rel="prefetch" href="/blog/assets/js/73.3882cfc5.js"><link rel="prefetch" href="/blog/assets/js/74.35e43a00.js"><link rel="prefetch" href="/blog/assets/js/75.226547a5.js"><link rel="prefetch" href="/blog/assets/js/76.a5da7ea1.js"><link rel="prefetch" href="/blog/assets/js/77.1c717162.js"><link rel="prefetch" href="/blog/assets/js/78.4b6da02c.js"><link rel="prefetch" href="/blog/assets/js/79.8e6ac326.js"><link rel="prefetch" href="/blog/assets/js/8.8c5d4817.js"><link rel="prefetch" href="/blog/assets/js/80.484686e1.js"><link rel="prefetch" href="/blog/assets/js/81.79994cce.js"><link rel="prefetch" href="/blog/assets/js/82.87043f88.js"><link rel="prefetch" href="/blog/assets/js/83.f63b123c.js"><link rel="prefetch" href="/blog/assets/js/84.84cbb039.js"><link rel="prefetch" href="/blog/assets/js/85.3b893911.js"><link rel="prefetch" href="/blog/assets/js/86.cd47b309.js"><link rel="prefetch" href="/blog/assets/js/87.6877aefa.js"><link rel="prefetch" href="/blog/assets/js/88.1e269399.js"><link rel="prefetch" href="/blog/assets/js/89.d0e9f998.js"><link rel="prefetch" href="/blog/assets/js/9.9bc781e0.js"><link rel="prefetch" href="/blog/assets/js/90.58d7a4df.js"><link rel="prefetch" href="/blog/assets/js/91.2df7ef87.js"><link rel="prefetch" href="/blog/assets/js/92.45b90ddb.js"><link rel="prefetch" href="/blog/assets/js/93.4aa2dcae.js"><link rel="prefetch" href="/blog/assets/js/94.2a5498eb.js"><link rel="prefetch" href="/blog/assets/js/95.a7d160da.js"><link rel="prefetch" href="/blog/assets/js/96.228b0e13.js"><link rel="prefetch" href="/blog/assets/js/97.4d991c12.js"><link rel="prefetch" href="/blog/assets/js/98.a306974f.js"><link rel="prefetch" href="/blog/assets/js/99.d63c41b3.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.c2d7d718.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar" data-v-5bb33761><div data-v-5bb33761><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-5bb33761 data-v-5bb33761><h3 class="title" data-v-59e6cb88>博客</h3> <p class="description" data-v-59e6cb88></p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>土豆</span>
+          
+        <span data-v-59e6cb88>2021 - </span>
+        2024
+      </a></span></div></div> <div class="hide" data-v-5bb33761><header class="navbar" data-v-5bb33761><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/blog/" class="home-link router-link-active"><!----> <span class="site-name">博客</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  home
+</a></div><div class="nav-item"><a href="/blog/other/2022/0929001.html" class="nav-link"><i class="iconfont reco-other"></i>
+  软件
+</a></div><div class="nav-item"><a href="https://github.com/zhoubin-datareachable" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://support.qq.com/product/435903" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-suggestion"></i>
+  留言板
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-5bb33761></div> <aside class="sidebar" data-v-5bb33761><div class="personal-info-wrapper" data-v-1fad0c41 data-v-5bb33761><img src="/blog/avatar.jpg" alt="author-avatar" class="personal-img" data-v-1fad0c41> <h3 class="name" data-v-1fad0c41>
+    土豆
+  </h3> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>105</h3> <h6 data-v-1fad0c41>文章</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>32</h3> <h6 data-v-1fad0c41>标签</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/blog/" class="nav-link"><i class="iconfont reco-home"></i>
+  home
+</a></div><div class="nav-item"><a href="/blog/other/2022/0929001.html" class="nav-link"><i class="iconfont reco-other"></i>
+  软件
+</a></div><div class="nav-item"><a href="https://github.com/zhoubin-datareachable" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-github"></i>
+  github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://support.qq.com/product/435903" target="_blank" rel="noopener noreferrer" class="nav-link external"><i class="iconfont reco-suggestion"></i>
+  留言板
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="/blog/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  TimeLine
+</a></div> <!----></nav> <!----> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-5bb33761><h3 class="title" data-v-59e6cb88>阻塞延时与空闲任务</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><span data-v-59e6cb88>土豆</span>
+          
+        <span data-v-59e6cb88>2021 - </span>
+        2024
+      </a></span></div></div> <div data-v-5bb33761><div data-v-5bb33761><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">阻塞延时与空闲任务</h1> <div data-v-8a445198><i class="iconfont reco-account" data-v-8a445198><span data-v-8a445198>土豆</span></i> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>2024/1/12</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>stm32</span></i></div></div> <div class="theme-reco-content content__default"><p>去掉延时函数，使用空闲任务。避免阻塞运行</p> <h2 id="实现空闲任务"><a href="#实现空闲任务" class="header-anchor">#</a> 实现空闲任务</h2> <h3 id="_1-定义空闲任务堆栈"><a href="#_1-定义空闲任务堆栈" class="header-anchor">#</a> 1.定义空闲任务堆栈</h3> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">ifndef</span> <span class="token expression">OS_CFG_APP_H</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span> <span class="token macro-name">OS_CFG_APP_H</span></span>
+
+<span class="token comment">/* 空闲任务堆栈大小 */</span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span>  <span class="token macro-name">OS_CFG_IDLE_TASK_STK_SIZE</span>       <span class="token expression"><span class="token number">128u</span></span></span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">endif</span>  <span class="token comment">/* OS_CFG_APP_H */</span></span>
+</code></pre></div><p><code>os_cfg_app.c</code> 文件代码</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;os_cfg_app.h&gt;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;os.h&gt;</span></span>
+
+CPU_STK        OSCfg_IdleTaskStk   <span class="token punctuation">[</span>OS_CFG_IDLE_TASK_STK_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token comment">/* 空闲任务堆栈起始地址 */</span>
+CPU_STK      <span class="token operator">*</span> <span class="token keyword">const</span>  OSCfg_IdleTaskStkBasePtr   <span class="token operator">=</span> <span class="token punctuation">(</span>CPU_STK    <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>OSCfg_IdleTaskStk<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token comment">/* 空闲任务堆栈大小 */</span>
+CPU_STK_SIZE   <span class="token keyword">const</span>  OSCfg_IdleTaskStkSize      <span class="token operator">=</span> <span class="token punctuation">(</span>CPU_STK_SIZE<span class="token punctuation">)</span>OS_CFG_IDLE_TASK_STK_SIZE<span class="token punctuation">;</span>
+</code></pre></div><p>空闲任务的堆栈的起始地址和大小均被定义成一个常量，不能被 修改。</p> <p><code>os.h</code>中声明</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* 空闲任务堆栈起始地址 */</span>
+<span class="token keyword">extern</span> CPU_STK      <span class="token operator">*</span> <span class="token keyword">const</span>  OSCfg_IdleTaskStkBasePtr<span class="token punctuation">;</span>
+<span class="token comment">/* 空闲任务堆栈大小 */</span>
+<span class="token keyword">extern</span> CPU_STK_SIZE   <span class="token keyword">const</span>  OSCfg_IdleTaskStkSize<span class="token punctuation">;</span>
+</code></pre></div><h3 id="_2-定义空闲任务-tcb"><a href="#_2-定义空闲任务-tcb" class="header-anchor">#</a> 2.定义空闲任务 TCB</h3> <p><code>os.h</code>中定义</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* 空闲任务 TCB */</span>
+OS_EXT    OS_TCB         OSIdleTaskTCB<span class="token punctuation">;</span>
+</code></pre></div><h3 id="_3-定义空闲任务函数"><a href="#_3-定义空闲任务函数" class="header-anchor">#</a> 3.定义空闲任务函数</h3> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">// os_type.h</span>
+<span class="token keyword">typedef</span>   CPU_INT32U      OS_IDLE_CTR<span class="token punctuation">;</span>
+<span class="token comment">// os.h</span>
+<span class="token comment">/* 空闲任务计数变量 */</span>
+OS_EXT    OS_IDLE_CTR    OSIdleTaskCtr<span class="token punctuation">;</span>
+</code></pre></div><p><code>os_core.c</code></p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* 空闲任务 */</span>
+<span class="token keyword">void</span>  <span class="token function">OS_IdleTask</span> <span class="token punctuation">(</span><span class="token keyword">void</span>  <span class="token operator">*</span>p_arg<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	p_arg <span class="token operator">=</span> p_arg<span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 空闲任务什么都不做，只对全局变量OSIdleTaskCtr ++ 操作 */</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span><span class="token punctuation">;</span><span class="token punctuation">;</span><span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		OSIdleTaskCtr<span class="token operator">++</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="_4-空闲任务初始化"><a href="#_4-空闲任务初始化" class="header-anchor">#</a> 4.空闲任务初始化</h3> <p>空闲任务初始化 <code>os_core.c</code></p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* 空闲任务初始化 */</span>
+<span class="token keyword">void</span>  <span class="token function">OS_IdleTaskInit</span><span class="token punctuation">(</span>OS_ERR  <span class="token operator">*</span>p_err<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>	
+	<span class="token comment">/* 初始化空闲任务计数器 */</span>
+	OSIdleTaskCtr <span class="token operator">=</span> <span class="token punctuation">(</span>OS_IDLE_CTR<span class="token punctuation">)</span><span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 创建空闲任务 */</span>
+	<span class="token function">OSTaskCreate</span><span class="token punctuation">(</span> <span class="token punctuation">(</span>OS_TCB     <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>OSIdleTaskTCB<span class="token punctuation">,</span> 
+			      <span class="token punctuation">(</span>OS_TASK_PTR <span class="token punctuation">)</span>OS_IdleTask<span class="token punctuation">,</span> 
+			      <span class="token punctuation">(</span><span class="token keyword">void</span>       <span class="token operator">*</span><span class="token punctuation">)</span><span class="token number">0</span><span class="token punctuation">,</span>
+			      <span class="token punctuation">(</span>CPU_STK    <span class="token operator">*</span><span class="token punctuation">)</span>OSCfg_IdleTaskStkBasePtr<span class="token punctuation">,</span>
+			      <span class="token punctuation">(</span>CPU_STK_SIZE<span class="token punctuation">)</span>OSCfg_IdleTaskStkSize<span class="token punctuation">,</span>
+			      <span class="token punctuation">(</span>OS_ERR     <span class="token operator">*</span><span class="token punctuation">)</span>p_err <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>调用代码</p> <p><code>os_core.c</code></p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* RTOS初始化
+** 初始化全局变量
+*/</span>
+<span class="token keyword">void</span> <span class="token function">OSInit</span> <span class="token punctuation">(</span>OS_ERR <span class="token operator">*</span>p_err<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">/* 配置OS初始状态为停止态 */</span>
+	OSRunning <span class="token operator">=</span>  OS_STATE_OS_STOPPED<span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 初始化两个全局TCB，这两个TCB用于任务切换 */</span>
+	OSTCBCurPtr <span class="token operator">=</span> <span class="token punctuation">(</span>OS_TCB <span class="token operator">*</span><span class="token punctuation">)</span><span class="token number">0</span><span class="token punctuation">;</span>
+	OSTCBHighRdyPtr <span class="token operator">=</span> <span class="token punctuation">(</span>OS_TCB <span class="token operator">*</span><span class="token punctuation">)</span><span class="token number">0</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 初始化就绪列表 */</span>
+	<span class="token function">OS_RdyListInit</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 初始化空闲任务 */</span>
+	<span class="token function">OS_IdleTaskInit</span><span class="token punctuation">(</span>p_err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token keyword">if</span> <span class="token punctuation">(</span><span class="token operator">*</span>p_err <span class="token operator">!=</span> OS_ERR_NONE<span class="token punctuation">)</span> 
+	<span class="token punctuation">{</span>
+        <span class="token keyword">return</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="实现阻塞延时"><a href="#实现阻塞延时" class="header-anchor">#</a> 实现阻塞延时</h2> <p><code>os_time.c</code></p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* 阻塞延时 */</span>
+<span class="token keyword">void</span>  <span class="token function">OSTimeDly</span><span class="token punctuation">(</span>OS_TICK dly<span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token comment">/* 设置延时时间 */</span>
+	OSTCBCurPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">=</span> dly<span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 进行任务调度 */</span>
+	<span class="token function">OSSched</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>	
+<span class="token punctuation">}</span>
+</code></pre></div><p>os_tcp增加任务延时周期个数</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token keyword">struct</span> <span class="token class-name">os_tcb</span>
+<span class="token punctuation">{</span>
+	CPU_STK         <span class="token operator">*</span>StkPtr<span class="token punctuation">;</span>
+	CPU_STK_SIZE    StkSize<span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 任务延时周期个数 */</span>
+	OS_TICK         TaskDelayTicks<span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
+</code></pre></div><p>任务调度<code>os_core.c</code></p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token comment">/* 任务切换，实际就是触发PendSV异常，然后在PendSV异常中进行上下文切换 */</span>
+<span class="token keyword">void</span> <span class="token function">OSSched</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	
+    <span class="token comment">/* 如果当前任务是空闲任务，那么就去尝试执行任务1或者任务2，看看他们的延时时间是否结束
+       如果任务的延时时间均没有到期，那就返回继续执行空闲任务 */</span>
+    <span class="token keyword">if</span><span class="token punctuation">(</span> OSTCBCurPtr <span class="token operator">==</span> <span class="token operator">&amp;</span>OSIdleTaskTCB <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>OSRdyList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            OSTCBHighRdyPtr <span class="token operator">=</span> OSRdyList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>OSRdyList<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            OSTCBHighRdyPtr <span class="token operator">=</span> OSRdyList<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">return</span><span class="token punctuation">;</span>		<span class="token comment">/* 任务延时均没有到期则返回，继续执行空闲任务 */</span>
+        <span class="token punctuation">}</span> 
+    <span class="token punctuation">}</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">{</span>
+        <span class="token comment">/*如果是task1或者task2的话，检查下另外一个任务,如果另外的任务不在延时中，就切换到该任务
+        否则，判断下当前任务是否应该进入延时状态，如果是的话，就切换到空闲任务。否则就不进行任何切换 */</span>
+        <span class="token keyword">if</span><span class="token punctuation">(</span>OSTCBCurPtr <span class="token operator">==</span> OSRdyList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>OSRdyList<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                OSTCBHighRdyPtr <span class="token operator">=</span> OSRdyList<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>OSTCBCurPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                OSTCBHighRdyPtr <span class="token operator">=</span> <span class="token operator">&amp;</span>OSIdleTaskTCB<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> 
+            <span class="token punctuation">{</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>		<span class="token comment">/* 返回，不进行切换，因为两个任务都处于延时中 */</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+        <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>OSTCBCurPtr <span class="token operator">==</span> OSRdyList<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token punctuation">)</span>
+        <span class="token punctuation">{</span>
+            <span class="token keyword">if</span><span class="token punctuation">(</span>OSRdyList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                OSTCBHighRdyPtr <span class="token operator">=</span> OSRdyList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> <span class="token keyword">if</span><span class="token punctuation">(</span>OSTCBCurPtr<span class="token operator">-&gt;</span>TaskDelayTicks <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">)</span>
+            <span class="token punctuation">{</span>
+                OSTCBHighRdyPtr <span class="token operator">=</span> <span class="token operator">&amp;</span>OSIdleTaskTCB<span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+            <span class="token keyword">else</span> 
+            <span class="token punctuation">{</span>
+                <span class="token keyword">return</span><span class="token punctuation">;</span>		<span class="token comment">/* 返回，不进行切换，因为两个任务都处于延时中 */</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+	
+	<span class="token comment">/* 任务切换 */</span>
+    <span class="token comment">// 触发PendSV异常</span>
+	<span class="token function">OS_TASK_SW</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h2 id="main-函数"><a href="#main-函数" class="header-anchor">#</a> main 函数</h2> <p>设置延时</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token function">OSTimeDly</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><p>完整代码</p> <div class="language-c extra-class"><pre class="language-c"><code><span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;os.h&quot;</span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&quot;ARMCM3.h&quot;</span></span>
+
+
+<span class="token class-name">uint32_t</span> flag1<span class="token punctuation">;</span>
+<span class="token class-name">uint32_t</span> flag2<span class="token punctuation">;</span>
+
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span>  <span class="token macro-name">TASK1_STK_SIZE</span>       <span class="token expression"><span class="token number">20</span></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">define</span>  <span class="token macro-name">TASK2_STK_SIZE</span>       <span class="token expression"><span class="token number">20</span></span></span>
+
+<span class="token keyword">static</span>   CPU_STK   Task1Stk<span class="token punctuation">[</span>TASK1_STK_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+<span class="token keyword">static</span>   CPU_STK   Task2Stk<span class="token punctuation">[</span>TASK2_STK_SIZE<span class="token punctuation">]</span><span class="token punctuation">;</span>
+
+<span class="token keyword">static</span>   OS_TCB    Task1TCB<span class="token punctuation">;</span>
+<span class="token keyword">static</span>   OS_TCB    Task2TCB<span class="token punctuation">;</span>
+
+<span class="token keyword">void</span>     <span class="token function">Task1</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token operator">*</span>p_arg <span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">void</span>     <span class="token function">Task2</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token operator">*</span>p_arg <span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/*
+************************************************************************************************************************
+*                                                  函数声明
+************************************************************************************************************************
+*/</span>
+<span class="token keyword">void</span> <span class="token function">delay</span><span class="token punctuation">(</span><span class="token class-name">uint32_t</span> count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+<span class="token comment">/*******************************************************************************************************
+*                                                    main函数
+*******************************************************************************************************/</span>
+<span class="token comment">/*
+* 注意事项：1、该工程使用软件仿真，debug需选择 Ude Simulator
+*           2、在Target选项卡里面把晶振Xtal(Mhz)的值改为25，默认是12，
+*              改成25是为了跟system_ARMCM3.c中定义的__SYSTEM_CLOCK相同，确保仿真的时候时钟一致
+*/</span>
+<span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
+<span class="token punctuation">{</span>	
+	OS_ERR err<span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 关闭中断 */</span>
+	<span class="token function">CPU_IntDis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 配置SysTick 10ms 中断一次 */</span>
+	<span class="token function">OS_CPU_SysTickInit</span> <span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 初始化相关的全局变量 */</span>
+	<span class="token function">OSInit</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 创建任务 */</span>
+	<span class="token function">OSTaskCreate</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>OS_TCB<span class="token operator">*</span><span class="token punctuation">)</span>      <span class="token operator">&amp;</span>Task1TCB<span class="token punctuation">,</span> 
+	              <span class="token punctuation">(</span>OS_TASK_PTR <span class="token punctuation">)</span> Task1<span class="token punctuation">,</span> 
+	              <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>       <span class="token number">0</span><span class="token punctuation">,</span>
+	              <span class="token punctuation">(</span>CPU_STK<span class="token operator">*</span><span class="token punctuation">)</span>     <span class="token operator">&amp;</span>Task1Stk<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	              <span class="token punctuation">(</span>CPU_STK_SIZE<span class="token punctuation">)</span> TASK1_STK_SIZE<span class="token punctuation">,</span>
+	              <span class="token punctuation">(</span>OS_ERR <span class="token operator">*</span><span class="token punctuation">)</span>     <span class="token operator">&amp;</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+	<span class="token function">OSTaskCreate</span> <span class="token punctuation">(</span><span class="token punctuation">(</span>OS_TCB<span class="token operator">*</span><span class="token punctuation">)</span>      <span class="token operator">&amp;</span>Task2TCB<span class="token punctuation">,</span> 
+	              <span class="token punctuation">(</span>OS_TASK_PTR <span class="token punctuation">)</span> Task2<span class="token punctuation">,</span> 
+	              <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token punctuation">)</span>       <span class="token number">0</span><span class="token punctuation">,</span>
+	              <span class="token punctuation">(</span>CPU_STK<span class="token operator">*</span><span class="token punctuation">)</span>     <span class="token operator">&amp;</span>Task2Stk<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+	              <span class="token punctuation">(</span>CPU_STK_SIZE<span class="token punctuation">)</span> TASK2_STK_SIZE<span class="token punctuation">,</span>
+	              <span class="token punctuation">(</span>OS_ERR <span class="token operator">*</span><span class="token punctuation">)</span>     <span class="token operator">&amp;</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+				  
+	<span class="token comment">/* 将任务加入到就绪列表 */</span>
+	OSRdyList<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr <span class="token operator">=</span> <span class="token operator">&amp;</span>Task1TCB<span class="token punctuation">;</span>
+	OSRdyList<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">.</span>HeadPtr <span class="token operator">=</span> <span class="token operator">&amp;</span>Task2TCB<span class="token punctuation">;</span>
+	
+	<span class="token comment">/* 启动OS，将不再返回 */</span>				
+	<span class="token function">OSStart</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>err<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+
+
+
+<span class="token comment">/* 任务1 */</span>
+<span class="token keyword">void</span> <span class="token function">Task1</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token operator">*</span>p_arg <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span><span class="token punctuation">;</span> <span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		flag1 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token comment">//delay( 100 );</span>
+		<span class="token function">OSTimeDly</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		
+		flag1 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token comment">//delay( 100 );</span>
+		<span class="token function">OSTimeDly</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment">/* 任务切换，这里是手动切换 */</span>		
+		<span class="token comment">//OSSched();</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token comment">/* 任务2 */</span>
+<span class="token keyword">void</span> <span class="token function">Task2</span><span class="token punctuation">(</span> <span class="token keyword">void</span> <span class="token operator">*</span>p_arg <span class="token punctuation">)</span>
+<span class="token punctuation">{</span>
+	<span class="token keyword">for</span><span class="token punctuation">(</span> <span class="token punctuation">;</span><span class="token punctuation">;</span> <span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		flag2 <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+		<span class="token comment">//delay( 100 );</span>
+		<span class="token function">OSTimeDly</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>		
+		flag2 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+		<span class="token comment">//delay( 100 );</span>
+		<span class="token function">OSTimeDly</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+		
+		<span class="token comment">/* 任务切换，这里是手动切换 */</span>
+		<span class="token comment">//OSSched();</span>
+	<span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div></section> <footer class="page-edit"><!----> <!----></footer> <!----> <div class="comments-wrapper"><!----></div> <ul class="side-bar sub-sidebar-wrapper" style="width:12rem;" data-v-ac050c62><li class="level-2" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#实现空闲任务" class="sidebar-link reco-side-实现空闲任务" data-v-ac050c62>实现空闲任务</a></li><li class="level-3" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#_1-定义空闲任务堆栈" class="sidebar-link reco-side-_1-定义空闲任务堆栈" data-v-ac050c62>1.定义空闲任务堆栈</a></li><li class="level-3" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#_2-定义空闲任务-tcb" class="sidebar-link reco-side-_2-定义空闲任务-tcb" data-v-ac050c62>2.定义空闲任务 TCB</a></li><li class="level-3" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#_3-定义空闲任务函数" class="sidebar-link reco-side-_3-定义空闲任务函数" data-v-ac050c62>3.定义空闲任务函数</a></li><li class="level-3" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#_4-空闲任务初始化" class="sidebar-link reco-side-_4-空闲任务初始化" data-v-ac050c62>4.空闲任务初始化</a></li><li class="level-2" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#实现阻塞延时" class="sidebar-link reco-side-实现阻塞延时" data-v-ac050c62>实现阻塞延时</a></li><li class="level-2" data-v-ac050c62><a href="/blog/stm32/2024/0112003.html#main-函数" class="sidebar-link reco-side-main-函数" data-v-ac050c62>main 函数</a></li></ul></main></div> <!----></div></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div></div></div>
+    <script src="/blog/assets/js/app.adc2faba.js" defer></script><script src="/blog/assets/js/6.c7879e8b.js" defer></script><script src="/blog/assets/js/1.6ba5f926.js" defer></script><script src="/blog/assets/js/114.2e50a91d.js" defer></script>
+  </body>
+</html>
